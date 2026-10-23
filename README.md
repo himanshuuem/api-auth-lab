@@ -2,6 +2,8 @@
 
 > A hands-on lab for the four common ways APIs authenticate: **none**, **HTTP Basic**, **API key** and **Bearer token**. It bundles its own Secrets API (the provider) and an Express + axios client (the consumer) that shows the exact request it sent, with secrets masked, next to the response.
 
+**🔗 Live demo:** https://api-auth-lab.onrender.com/ *(free tier: the first visit after idle takes ~30–60s to wake up)*
+
 [![test](https://github.com/himanshuuem/api-auth-lab/actions/workflows/test.yml/badge.svg)](https://github.com/himanshuuem/api-auth-lab/actions/workflows/test.yml)
 ![Express](https://img.shields.io/badge/Express-5-000?logo=express)
 ![axios](https://img.shields.io/badge/axios-5A29E4?logo=axios&logoColor=white)
