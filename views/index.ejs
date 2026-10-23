@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API Auth Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="hero">
+    <p class="eyebrow">Express · axios · 4 auth schemes</p>
+    <h1>API Auth Lab</h1>
+    <p>Pick an authentication method. The server calls the Secrets API with axios and shows you the exact request it sent (secrets masked) and the response it got back.</p>
+  </header>
+
+  <main class="lab">
+    <section class="kinds">
+      <% kinds.forEach((k) => { %>
+        <form class="kind <%= result && result.kind === k.kind ? 'active' : '' %>" action="/try/<%= k.kind %>" method="get">
+          <h2><%= k.title %></h2>
+          <code class="endpoint"><%= k.endpoint %></code>
+          <p><%= k.blurb %></p>
+          <% if (k.kind === "basic") { %>
+            <label>Page <input type="number" name="page" min="1" max="9" value="1"></label>
+          <% } else if (k.kind === "apikey") { %>
+            <label>Min embarrassment <input type="number" name="score" min="1" max="10" value="7"></label>
+          <% } else if (k.kind === "bearer") { %>
+            <label>Secret id <input type="number" name="id" min="1" max="99" value="2"></label>
+          <% } %>
+          <button type="submit">Send request →</button>
+        </form>
+      <% }) %>
+    </section>
+
+    <section class="console" aria-live="polite">
+      <% if (!result) { %>
+        <p class="placeholder">Responses appear here.</p>
+      <% } else { %>
+        <% if (result.request) { %>
+          <h3>Request</h3>
+          <pre><span class="method"><%= result.request.method %></span> <%= result.request.url %>
+<% Object.entries(result.request.headers).forEach(([name, value]) => { %><span class="header"><%= name %>:</span> <%= value %>
+<% }) %></pre>
+        <% } %>
+        <h3>Response <span class="status s<%= String(result.response.status)[0] %>xx"><%= result.response.status %></span> <small><%= result.response.ms %> ms</small></h3>
+        <pre class="json"><%= JSON.stringify(result.response.body, null, 2) %></pre>
+      <% } %>
+    </section>
+  </main>
+
+  <footer class="footer">Built by <a href="https://github.com/himanshuuem">Himanshu</a> · the Secrets API is bundled in <code>src/api</code></footer>
+</body>
+</html>
